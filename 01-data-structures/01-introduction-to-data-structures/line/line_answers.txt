@@ -1,0 +1,8 @@
+How does your data structure allow developers to access and manipulate the data?
+It allows a developer to add an element to the end of an array, delete a specific element, find the first, middle, or last element, find a specific element or its index. 
+
+If a developer wanted to find a specific element in your data structure, how would you search for it?
+My particular solution uses an each loop, but there are other solutions, like a for loop. 
+
+What other real-world data can each structure represent?
+Waiting in line for something is a good real world example. Fast food, banking, traffic, etc. 

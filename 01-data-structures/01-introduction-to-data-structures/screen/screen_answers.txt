@@ -1,0 +1,11 @@
+How does your data structure allow developers to access and manipulate the data?
+In the line.rb problem, you can add an element to the end of an array, delete an element from an array, find the first, middle, or last element in the array, find a specific element in an array, or find the index of a specific element in an array.
+In the pixel.rb and screen.rb problem, you can validate user input based on an RGB color code. Colors initialize after they have been validate. Those pixels are used in the screen.rb file to insert pixels at specific locations determined by the 'at' method. The location of pixel insertion is validated with the 'inbounds' method.
+
+If a developer wanted to find a specific element in your data structure, how would you search for it?
+In the line.rb problem, you would use the search method.
+In the pixel.rb and screen.rb problem, you could build a search method that searches the matrix with x, y coordinates to return the RGB codes.
+
+What other real-world data can each structure represent?
+For the line.rb problem, any application with lines or queues would be appropriate, i.e. fast food, banks, post office, retail stores.
+For the pixel.rb and screen.rb problem, geospatial coordinates would be a more sophisticated application. Pixels are like places, and the screen is like a grid that can find/identify those places with (x) longitude and (y) latitude coordinates. 
