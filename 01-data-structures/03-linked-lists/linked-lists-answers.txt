@@ -1,0 +1,27 @@
+What is Spatial Locality and why does it benefit performance?
+
+Spatial locality is a phenomenon that asserts that programs tend to favor data that is near other data that is in close proximity to it. Spatial locality benefits performance for that same reason since shorter distances between pieces of data generally takes a shorter amount of time to access it.
+
+Compare the performance of an Array to a Linked List using the Benchmark module.
+Compare the time it takes to create a 10,000 item Array to appending 10,000 items to a Linked List.
+Compare the time it takes to access the 5000th element of the Array and the 5000th Node in the Linked List.
+Compare the time it takes to remove the 5000th element from the Array to removing the 5000th Node in the Linked List.
+
+MacBook-Air:03-linked-lists BrandonBaker$ ruby -r "./linked_list.rb" -e "LinkedList.new.bench"
+
+              user     system      total        real
+
+build array  0.000000   0.000000   0.000000 (  0.001431)
+
+build list  0.010000   0.000000   0.010000 (  0.005724)
+
+index array  0.000000   0.000000   0.000000 (  0.000002)
+
+index list  0.000000   0.000000   0.000000 (  0.000417)
+
+delete array  0.000000   0.000000   0.000000 (  0.000008)
+
+delete list  0.000000   0.000000   0.000000 (  0.000599)
+
+Arrays take home the GOLD on performance in every category. This could be due to the fact that my linked list class is not optimized, but the results here suggest that array performance outperforms linked list performance. 
+
