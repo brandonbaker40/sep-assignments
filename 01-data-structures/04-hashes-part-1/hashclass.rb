@@ -24,17 +24,17 @@ class HashClass
 
   def [](key) # Via syntactic sugar, becomes `hash[key] # => value`
     # lotr_movies["The Lord of the Rings: The Fellowship of the Ring"]
-    @items[index(key, size)]
+    @items[index(key, size)].value
   end
 
   def resize
-    current_array = @items # store the current items array in current_array variable
-    @items = Array.new((current_array.length * 2)) # redefine the @items array to be an array with double the amount of indexes in the current_array
-    current_array.each do |i| # for each item in the current_array
-      if i != nil # if i is not nil (which it will always be in the examples)
-        new_hash_index = index(i.key, current_array.length) # perform the index function on i and store the result in a variable called new_hash_index
-        @items[new_hash_index] = i # assign i to a new index position in @items
+    new_array = Array.new((@items.length * 2)) # redefine the @items array to be an array with double the amount of indexes in the current_array
+    @items.each do |i| # for each item in the current_array
+      if i  # if i is not nil (which it will always be in the examples)
+        new_hash_index = index(i.key, new_array.length) # perform the index function on i and store the result in a variable called new_hash_index
+        new_array[new_hash_index] = i # assign i to a new index position in @items
       end
+      @items = new_array
     end
   end
 
