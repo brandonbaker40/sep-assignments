@@ -1,7 +1,7 @@
 include RSpec
 
-require_relative 'node'
-require_relative 'open_addressing'
+# require_relative 'node'
+# require_relative 'open_addressing'
 
 RSpec.describe OpenAddressing, type: Class do
   let(:star_wars_movies) { OpenAddressing.new(6) }
