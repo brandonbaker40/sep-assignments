@@ -57,7 +57,7 @@
 #   describe "#load_factor" do
 #     it "returns the number of items in the hash divided by the size of the underlying array" do
 #       h = SeparateChaining.new(4)
-#
+# 
 #       # Load Factor starts at zero
 #       expect(h.load_factor == 0).to be true
 #       h["key"] = "value"

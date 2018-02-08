@@ -6,11 +6,12 @@ class OpenAddressing
   end
 
   def []=(key, value)
+    some_item = Node.new(key, value)
+
     # COMPUTE the hash code for key, ASSIGN to index
     some_index = index(key, size)
     # WHILE a key and value exist at array[index]
     while @items[some_index].key
-
       # INCREMENT index by 1
       until some_index == @items.length do
         some_index += 1
