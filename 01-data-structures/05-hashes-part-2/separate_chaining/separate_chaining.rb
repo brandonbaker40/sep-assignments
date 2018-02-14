@@ -28,19 +28,23 @@ class SeparateChaining
   end
 
   def [](key)
-    some_index = index(key, size) # perform the index function and store it in a variable some_index
-    this_node = @items[some_index].head # find the head of the linked list found at some_index and assign it to this_node
-    while this_node.key != key # while the key of this_node is not the key passed as an argument
-      this_node = this_node.next # assign some_item to the next bucket
+    some_index = index(key, size)
+    if @items[some_index] # if there is a linked list at this index
+      current_node = @items[some_index].head # assign the head of the linked list to current_node
+      while current_node.key != key # while the key of the current_node doesn't match the argument key
+        current_node = current_node.next # go to the next node and look for it there
+      end # break the loop after you can't call next on current_node
+        return current_node.value # return the value of the current_node once you find a match
+    else # if there is no linked list at that index, then we have nothing to search
+      return "There's nothing here!!!"
     end
-    return this_node.value # return this once the key of the node matches the key passed as an argument
   end
 
   # Returns a unique, deterministically reproducible index into an array
   # We are hashing based on strings, let's use the ascii value of each string as
   # a starting point.
   def index(key, size)
-    key.sum % size # perform the ruby sum function on key and modulo the result by the number of items in the array
+      key.to_s.sum % size # perform the ruby sum function on key and modulo the result by the number of items in the array
   end
 
   # Calculate the current load factor
@@ -53,15 +57,20 @@ class SeparateChaining
     @items.length # calculate the length of the array of items
   end
 
-  # Resize the hash
   def resize
-    new_array = Array.new(@items.length * 2) # redefine the @items array to be an array with double the amount of indexes in the current_array
-    @items.each do |i| # for each item in the current_array
-      if i  # if i is not nil (which it will always be in the examples)
-        new_hash_index = index(i.key, new_array.length) # perform the index function on i and store the result in a variable called new_hash_index
-        new_array[new_hash_index] = i # assign i to a new index position in @items
+    new_array = Array.new(@items.length * 2)
+    @items.each do |linked_list| # each item in the @items array is a linked_list
+      if linked_list # if the linked_list exists at that index
+        current_node = linked_list.head # get the head from the list
+        re_index = index(current_node.key, new_array.length) # perform re_index function on it, which is just the index function modified for the new length
+        while current_node # execute loop for every head node in the array
+          linked_list = LinkedList.new # make a new Linked List
+          linked_list.add_to_front(current_node)
+          new_array[re_index] = linked_list # perform re_index method on hashes inside of the linked_list
+          current_node = current_node.next # reassign head to the next node
+        end
       end
-      @items = new_array
     end
+    @items = new_array
   end
 end
