@@ -44,7 +44,12 @@ class SeparateChaining
   # We are hashing based on strings, let's use the ascii value of each string as
   # a starting point.
   def index(key, size)
-      key.to_s.sum % size # perform the ruby sum function on key and modulo the result by the number of items in the array
+    if key.is_a? String
+      puts key
+    else
+      puts "MISSING"
+    end
+    key.to_s.sum % size # perform the ruby sum function on key and modulo the result by the number of items in the array
   end
 
   # Calculate the current load factor
