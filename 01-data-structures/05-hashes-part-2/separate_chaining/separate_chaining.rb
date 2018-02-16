@@ -44,11 +44,11 @@ class SeparateChaining
   # We are hashing based on strings, let's use the ascii value of each string as
   # a starting point.
   def index(key, size)
-    if key.is_a? String
-      puts key
-    else
-      puts "MISSING"
-    end
+    # if key.is_a? String
+    #   puts key
+    # else
+    #   puts "MISSING"
+    # end
     key.to_s.sum % size # perform the ruby sum function on key and modulo the result by the number of items in the array
   end
 
@@ -63,19 +63,18 @@ class SeparateChaining
   end
 
   def resize
-    new_array = Array.new(@items.length * 2)
-    @items.each do |linked_list| # each item in the @items array is a linked_list
-      if linked_list # if the linked_list exists at that index
-        current_node = linked_list.head # get the head from the list
-        re_index = index(current_node.key, new_array.length) # perform re_index function on it, which is just the index function modified for the new length
-        while current_node # execute loop for every head node in the array
-          linked_list = LinkedList.new # make a new Linked List
-          linked_list.add_to_front(current_node)
-          new_array[re_index] = linked_list # perform re_index method on hashes inside of the linked_list
-          current_node = current_node.next # reassign head to the next node
+    new_hash = SeparateChaining.new(@items.length * 2)
+    @items.each do |linked_list|
+      if linked_list
+        current_head = linked_list.head
+
+        while current_head do
+          # new_hash.[]=(current_head.key, current_head.value)
+          new_hash[current_head.key] = current_head.value
+          current_head = current_head.next
         end
       end
     end
-    @items = new_array
-  end
+      @items = new_hash.linked_lists
+    end
 end
