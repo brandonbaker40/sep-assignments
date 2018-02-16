@@ -1,4 +1,4 @@
-require_relative 'binary_search_tree'
+require_relative 'heap'
 
 
 class Node
