@@ -2,18 +2,15 @@ include RSpec
 
 #require_relative 'heap'
 
-
-# Smallest value is at the root
-
 RSpec.describe Heap, type: Class do
-  let (:root) { Node.new("The Matrix", 87) }
 
-  let (:tree) { Heap.new(root) }
+  let (:tree) { Heap.new() }
   let (:pacific_rim) { Node.new("Pacific Rim", 72) }
   let (:braveheart) { Node.new("Braveheart", 78) }
   let (:jedi) { Node.new("Star Wars: Return of the Jedi", 80) }
   let (:donnie) { Node.new("Donnie Darko", 85) }
   let (:inception) { Node.new("Inception", 86) }
+  let (:matrix) { Node.new("The Matrix", 87) }
   let (:district) { Node.new("District 9", 90) }
   let (:shawshank) { Node.new("The Shawshank Redemption", 91) }
   let (:martian) { Node.new("The Martian", 92) }
@@ -22,190 +19,145 @@ RSpec.describe Heap, type: Class do
   let (:mad_max_2) { Node.new("Mad Max 2: The Road Warrior", 98) }
 
   describe "#insert(data)" do
-    it "properly sets the root node by inserting then swapping if necessary" do
-      tree.insert(root, pacific_rim)
-      expect(root.left.title).to eq "Pacific Rim"
+    it "properly sets the root node by insert it into an initialized heap" do
+      tree.insert(pacific_rim)
+      expect(tree.nodes).to eq([nil, pacific_rim])
     end
 
-    it "properly arranges the min heap after inserting multiple nodes" do
-      tree.insert(tree.root, pacific_rim)
-      tree.insert(tree.root, braveheart)
-      tree.insert(tree.root, jedi)
-      tree.insert(tree.root, donnie)
-      tree.insert(tree.root, inception)
-      tree.insert(tree.root, district)
-      tree.insert(tree.root, shawshank)
-      tree.insert(tree.root, martian)
-      tree.insert(tree.root, hope)
-      tree.insert(tree.root, empire)
-      tree.insert(tree.root, mad_max_2)
+    it "properly arranges the min heap after inserting multiple nodes in no particular order" do
+      tree.insert(donnie)
+      tree.insert(mad_max_2)
+      tree.insert(pacific_rim)
+      tree.insert(braveheart)
+      tree.insert(martian)
+      tree.insert(empire)
+      tree.insert(jedi)
+      tree.insert(inception)
+      tree.insert(hope)
+      tree.insert(matrix)
+      tree.insert(district)
+      tree.insert(shawshank)
 
-      expect(root.title).to eq "Pacific Rim")
-      expect(root.left.title).to eq "Braveheart")
-      expect(root.right.title).to eq "Star Wars: Return of the Jedi")
-      expect(root.left.left.title).to eq "Donnie Darko")
-      expect(root.left.right.title).to eq "Inception")
-      expect(root.right.left.title).to eq "The Matrix")
-      expect(root.right.right.title).to eq "District 9")
-      expect(root.left.left.left.title).to eq "The Shawshank Redemption")
-      expect(root.left.left.right.title).to eq "The Martian")
-      expect(root.left.right.left.title).to eq "Star Wars: A New Hope")
-      expect(root.left.right.right.title).to eq "Star Wars: The Empire Strikes Back")
-      expect(root.right.left.left.title).to eq "Mad Max 2: The Road Warrior")
-    end
-
-    it "properly arranges the min heap after inserting one node" do
-      tree.insert(root, pacific_rim)
-      expect(root.left.title).to eq "Braveheart"
-    end
-
-    it "properly inserts a new node as a left-left child" do
-      tree.insert(root, braveheart)
-      tree.insert(root, pacific_rim)
-      expect(root.left.left.title).to eq "Pacific Rim"
-    end
-
-    it "properly inserts a new node as a left-right child" do
-      tree.insert(root, donnie)
-      tree.insert(root, inception)
-      expect(root.left.right.title).to eq "Inception"
-    end
-
-    it "properly inserts a new node as a right child" do
-      tree.insert(root, district)
-      expect(root.right.title).to eq "District 9"
-    end
-
-    it "properly inserts a new node as a right-left child" do
-      tree.insert(root, hope)
-      tree.insert(root, martian)
-      expect(root.right.left.title).to eq "The Martian"
-    end
-
-    it "properly inserts a new node as a right-right child" do
-      tree.insert(root, empire)
-      tree.insert(root, mad_max_2)
-      expect(root.right.right.title).to eq "Mad Max 2: The Road Warrior"
+      expect(tree.nodes).to eq([nil, pacific_rim, braveheart, jedi, inception, matrix, shawshank, donnie, mad_max_2, hope, martian, district, empire])
     end
   end
 
-  describe "#find(data)" do
-    it "handles nil gracefully" do
-      tree.insert(root, empire)
-      tree.insert(root, mad_max_2)
-      expect(tree.find(root, nil)).to eq nil
+  describe "#delete_node(node)" do
+    it "removes the node from the heap" do
+      tree.insert(pacific_rim)
+      tree.insert(braveheart)
+      tree.delete_node(pacific_rim)
+
+      expect(tree.nodes).to eq([nil, braveheart])
     end
 
-    it "properly finds a left node" do
-      tree.insert(root, pacific_rim)
-      expect(tree.find(root, pacific_rim.title).title).to eq "Pacific Rim"
+    it "properly rearranges the min heap after deleting multiple nodes in no particular order" do
+
+      tree.insert(donnie)
+      tree.insert(mad_max_2)
+      tree.insert(pacific_rim)
+      tree.insert(braveheart)
+      tree.insert(martian)
+      tree.insert(empire)
+      tree.insert(jedi)
+      tree.insert(inception)
+      tree.insert(hope)
+      tree.insert(matrix)
+      tree.insert(district)
+      tree.insert(shawshank)
+
+      tree.delete_node(braveheart)
+      tree.delete_node(hope)
+      tree.delete_node(inception)
+
+
+      expect(tree.nodes).to eq([nil, pacific_rim, matrix, jedi, district, martian, shawshank, donnie, mad_max_2, empire])
+
+    end
+  end
+  #
+  describe "#find(node), #find_left_child, #find_right_child" do
+    it "properly finds any node" do
+      tree.insert(donnie)
+      tree.insert(empire)
+
+      expect(tree.find(empire)).to eq empire
+      expect(tree.find(empire)).to_not eq donnie
     end
 
-    it "properly finds a left-left node" do
-      tree.insert(root, braveheart)
-      tree.insert(root, pacific_rim)
-      expect(tree.find(root, pacific_rim.title).title).to eq "Pacific Rim"
+    it "properly finds a title of any node" do
+      tree.insert(donnie)
+      tree.insert(mad_max_2)
+      tree.insert(pacific_rim)
+
+      expect(tree.find(pacific_rim).title).to eq "Pacific Rim"
     end
 
-    it "properly finds a left-right node" do
-      tree.insert(root, donnie)
-      tree.insert(root, inception)
-      expect(tree.find(root, inception.title).title).to eq "Inception"
+    it "properly find a rating of any node" do
+      tree.insert(donnie)
+      tree.insert(mad_max_2)
+      tree.insert(pacific_rim)
+
+      expect(tree.find(pacific_rim).rating).to eq 72
     end
 
-    it "properly finds a right node" do
-      tree.insert(root, district)
-      expect(tree.find(root, district.title).title).to eq "District 9"
+    it "properly finds a left child node" do
+      tree.insert(donnie)
+      tree.insert(mad_max_2)
+      tree.insert(pacific_rim)
+
+      expect(tree.find_left_child(pacific_rim)).to eq mad_max_2
     end
 
-    it "properly finds a right-left node" do
-      tree.insert(root, hope)
-      tree.insert(root, martian)
-      expect(tree.find(root, martian.title).title).to eq "The Martian"
+    it "properly finds a right child node" do
+      tree.insert(donnie)
+      tree.insert(mad_max_2)
+      tree.insert(pacific_rim)
+
+      expect(tree.find_right_child(pacific_rim)).to eq donnie
     end
 
-    it "properly finds a right-right node" do
-      tree.insert(root, empire)
-      tree.insert(root, mad_max_2)
-      expect(tree.find(root, mad_max_2.title).title).to eq "Mad Max 2: The Road Warrior"
+    it "properly finds a collection of right and left child nodes" do
+      tree.insert(donnie)
+      tree.insert(mad_max_2)
+      tree.insert(pacific_rim)
+      tree.insert(braveheart)
+      tree.insert(martian)
+      tree.insert(empire)
+      tree.insert(jedi)
+      tree.insert(inception)
+      tree.insert(hope)
+      tree.insert(matrix)
+      tree.insert(district)
+      tree.insert(shawshank)
+
+      # right right
+      expect(tree.find_right_child(tree.find_right_child(pacific_rim))).to eq donnie
+      # right left
+      expect(tree.find_left_child(tree.find_right_child(braveheart))).to eq martian
+      # left right
+      expect(tree.find_right_child(tree.find_left_child(braveheart))).to eq hope
+      # left left
+      expect(tree.find_left_child(tree.find_left_child(pacific_rim))).to eq inception
     end
   end
 
-  describe "#delete(data)" do
-    it "handles nil gracefully" do
-      expect(tree.delete(root, nil)).to eq nil
-    end
-
-    it "properly deletes a left node" do
-      tree.insert(root, hope)
-      tree.delete(root, hope.title)
-      expect(tree.find(root, hope.title)).to be_nil
-    end
-
-    it "properly deletes a left-left node" do
-      tree.insert(root, braveheart)
-      tree.insert(root, pacific_rim)
-      tree.delete(root, pacific_rim.title)
-      expect(tree.find(root, pacific_rim.title)).to be_nil
-    end
-
-    it "properly deletes a left-right node" do
-      tree.insert(root, donnie)
-      tree.insert(root, inception)
-      tree.delete(root, inception.title)
-      expect(tree.find(root, inception.title)).to be_nil
-    end
-
-    it "properly deletes a right node" do
-      tree.insert(root, district)
-      tree.delete(root, district.title)
-      expect(tree.find(root, district.title)).to be_nil
-    end
-
-    it "properly deletes a right-left node" do
-      tree.insert(root, hope)
-      tree.insert(root, martian)
-      tree.delete(root, martian.title)
-      expect(tree.find(root, martian.title)).to be_nil
-    end
-
-    it "properly deletes a right-right node" do
-      tree.insert(root, empire)
-      tree.insert(root, mad_max_2)
-      tree.delete(root, mad_max_2.title)
-      expect(tree.find(root, mad_max_2.title)).to be_nil
-    end
-  end
-
-  describe "#printf" do
-     specify {
-       expected_output = "The Matrix: 87\nStar Wars: Return of the Jedi: 80\nStar Wars: A New Hope: 93\nPacific Rim: 72\nInception: 86\nThe Martian: 92\nStar Wars: The Empire Strikes Back: 94\nBraveheart: 78\nThe Shawshank Redemption: 91\nMad Max 2: The Road Warrior: 98\nDistrict 9: 90\n"
-       tree.insert(root, hope)
-       tree.insert(root, empire)
-       tree.insert(root, jedi)
-       tree.insert(root, martian)
-       tree.insert(root, pacific_rim)
-       tree.insert(root, inception)
-       tree.insert(root, braveheart)
-       tree.insert(root, shawshank)
-       tree.insert(root, district)
-       tree.insert(root, mad_max_2)
-       expect { tree.printf }.to output(expected_output).to_stdout
-     }
-
-     specify {
-       expected_output = "The Matrix: 87\nBraveheart: 78\nMad Max 2: The Road Warrior: 98\nPacific Rim: 72\nInception: 86\nDistrict 9: 90\nStar Wars: Return of the Jedi: 80\nThe Shawshank Redemption: 91\nThe Martian: 92\nStar Wars: The Empire Strikes Back: 94\nStar Wars: A New Hope: 93\n"
-       tree.insert(root, mad_max_2)
-       tree.insert(root, district)
-       tree.insert(root, shawshank)
-       tree.insert(root, braveheart)
-       tree.insert(root, inception)
-       tree.insert(root, pacific_rim)
-       tree.insert(root, martian)
-       tree.insert(root, jedi)
-       tree.insert(root, empire)
-       tree.insert(root, hope)
-       expect { tree.printf }.to output(expected_output).to_stdout
-     }
+  describe "#print_heap" do
+      specify {
+        expected_output = "Pacific Rim: 72\nBraveheart: 78\nStar Wars: Return of the Jedi: 80\nInception: 86\nThe Matrix: 87\nThe Shawshank Redemption: 91\nDonnie Darko: 85\nMad Max 2: The Road Warrior: 98\nStar Wars: A New Hope: 93\nThe Martian: 92\nDistrict 9: 90\nStar Wars: The Empire Strikes Back: 94\n"
+          tree.insert(donnie)
+          tree.insert(mad_max_2)
+          tree.insert(pacific_rim)
+          tree.insert(braveheart)
+          tree.insert(martian)
+          tree.insert(empire)
+          tree.insert(jedi)
+          tree.insert(inception)
+          tree.insert(hope)
+          tree.insert(matrix)
+          tree.insert(district)
+          tree.insert(shawshank)
+        expect { tree.print_heap }.to output(expected_output).to_stdout
+      }
   end
 end
