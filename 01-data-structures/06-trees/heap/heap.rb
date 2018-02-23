@@ -59,7 +59,7 @@ class Heap
     not_the_last_element = child_index < @nodes.size - 1  # boolean check on the last element... can't bubble down on last element
     left_element = @nodes[child_index] # left child element
     right_element = @nodes[child_index + 1] # right child element
-    child_index += 1 if not_the_last_element && (right_element.rating < left_element.rating) # child index will be the right index only if
+    child_index += 1 if not_the_last_element && (right_element.rating < left_element.rating)
 
     return if @nodes[child_index].rating >= @nodes[index].rating  # don't call the rest of the method if the rating at index is greater than the rating at the child index
 
@@ -69,8 +69,6 @@ class Heap
 
   def exchange(source, target)
     @nodes[source], @nodes[target] = @nodes[target], @nodes[source] # swap positions by reasssignment instead of using a temp variable
-
-    #temp = node
   end
 
 
