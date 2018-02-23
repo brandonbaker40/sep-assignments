@@ -1,0 +1,17 @@
+Lazy deletion
+Lazy deletion is a method of removing elements from a hash table where deleted nodes are
+"marked" as deleted while remaining in the data structure. It allows for overwriting with
+the insert method, but treats "deleted" locations as occupied during the find method.
+Lazy deletion dilutes the advantages of spatial locality since deleted nodes are taking
+up space when they'll never be accessed. It's also wasteful of time since deleted nodes
+increase the length of the path to the element to be accessed.
+
+Random Hashing
+Random hashing uses a pseudorandom number generator to generate a proposed location n
+indexes from the collision location. This method can be deployed once a collision has occurred.
+Random hashing can be expensive because of the PRNG.
+
+Double hashing
+Double hashing is a method where elements are hashed twice, hence the name -- "double hashing".
+Elements are hashed for a second time when a collision occurred on the first hash function and
+will keep calling the double hash method until the element is inserted into an empty location.
