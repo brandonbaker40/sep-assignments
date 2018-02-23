@@ -2,38 +2,27 @@ require_relative 'node'
 
 class OpenAddressing
   def initialize(size)
-    @items = Array.new(size)
+    @nodes = Array.new(size)
   end
 
   def []=(key, value)
-    some_item = Node.new(key, value)
-
-    # COMPUTE the hash code for key, ASSIGN to index
-    some_index = index(key, size)
-    # WHILE a key and value exist at array[index]
-    while @items[some_index].key
-      # INCREMENT index by 1
-      until some_index == @items.length do
-        some_index += 1
+    node_index = index(key, size)
+    if @nodes[node_index]
+      node_index = next_open_index(index(key, size))
+      if node_index == -1
+        resize
+        node_index = next_open_index(index(key, size))
       end
-      # IF we've checked the entire array THEN
-      if @items[-1] != nil
-      # CALL RESIZE
-      self.resize
-      # CALL INSERT(key, value)
-      self[key] = value
-      # RETURN
-      # END IF
-      end
-
-      # END WHILE
     end
-      self[key] = value
-      # SET array[index] to the new key and value
+    @nodes[node_index] = Node.new(key, value)
   end
 
   def [](key)
-    @items[index(key, size)].value
+    node_index = index(key, size)
+    while @nodes[node_index].key != key
+      node_index += 1
+    end
+    @nodes[node_index].value
   end
 
   # Returns a unique, deterministically reproducible index into an array
@@ -43,30 +32,30 @@ class OpenAddressing
     key.sum % size
   end
 
-  # Given an index, find the next open index in @items
+  # Given an index, find the next open index in @nodes
   def next_open_index(index)
-    (index...@items.length).each do |x|
-      if @items[x] == nil
+    (index...@nodes.length).each do |x|
+      if @nodes[x] == nil
         return x
       end
     end
     return -1
   end
 
-  # Simple method to return the number of items in the hash
+  # Simple method to return the number of nodes in the hash
   def size
-    @items.length
+    @nodes.length
   end
 
   # Resize the hash
   def resize
-    new_array = Array.new((@items.length * 2)) # redefine the @items array to be an array with double the amount of indexes in the current_array
-    @items.each do |i| # for each item in the current_array
+    new_array = Array.new((@nodes.length * 2)) # redefine the @nodes array to be an array with double the amount of indexes in the current_array
+    @nodes.each do |i| # for each item in the current_array
       if i  # if i is not nil (which it will always be in the examples)
         new_hash_index = index(i.key, new_array.length) # perform the index function on i and store the result in a variable called new_hash_index
-        new_array[new_hash_index] = i # assign i to a new index position in @items
+        new_array[new_hash_index] = i # assign i to a new index position in @nodes
       end
-      @items = new_array
+      @nodes = new_array
     end
   end
 end
