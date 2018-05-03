@@ -1,34 +1,63 @@
 require_relative 'node.rb'
 require_relative 'film.rb'
+require_relative "priority_queue"
 
-class KevinBacon
+class Kevin_Bacon
+  def initialize(graph, kevin_bacon)
+    @graph = graph
+    @kevin_bacon = kevin_bacon
+    @path = { }
+    @path_length = { }
+    @pq = PriorityQueue.new
 
-  def find_kevin_bacon(node)
-    @path = [ ]
+    find_kevin_bacon
+  end
 
-    return "This is Kevin Bacon." if node.name == "Kevin Bacon"
+  def find_shortest_path(node)
+    path = [ ]
+    while node != @kevin_bacon
+      path.unshift(node)
+      node = @path[node]
+    end
+    path.unshift(@kevin_bacon)
+  end
 
-    # call the film actor hash method on each actor
-    node.film_actor_hash.each do |film, actors|
-      actors.each do |actor|
-        # if Kevin Bacon is in the movie, add the film to the array because we've got one degree of separation now
-        if actor.name == "Kevin Bacon"
-          @path << film
-          # remove any duplicate films in the hash
-          return @path.uniq
-        else
-          @path << film
-          find_kevin_bacon(actor)
-        end
-        puts @path.uniq
-        @path.uniq
-      end
+  private
+  # This method will compute the shortest path from the source node to all the
+  # other nodes in the graph.
+  def find_kevin_bacon
+    update_distance_of_all_films_to(Float::INFINITY)
 
-      if @path.length > 5
-        return "#{node.name} fails six degrees of separation."
-      else
-        return @path.uniq
+    @path_length[@kevin_bacon] = 0
+
+    # The prioriy queue holds a node and its distance from the source node.
+    @pq.insert(@kevin_bacon, 0)
+    while @pq.any?
+      node = @pq.remove_min
+      node.appearances.each do |adj_film|
+        relax(adj_film)
       end
     end
+  end
+
+  def update_distance_of_all_films_to(distance)
+    @graph.nodes.each do |node|
+      @path_length[node] = distance
+    end
+  end
+
+  # Film relaxation basically means that we are checking if the shortest known
+  # path to a given node is still valid (i.e. we didn't find an even
+  # shorter path).
+  def relax(film)
+    return if @path_length[film.to] <= @path_length[film.from]
+
+    @path_length[film.to] = @path_length[film.from]
+
+    @path[film.to] = film.from
+
+    # If the node is already in this priority queue, the only that happens is
+    # that its distance is decreased.
+    @pq.insert(film.to, @path_length[film.to])
   end
 end

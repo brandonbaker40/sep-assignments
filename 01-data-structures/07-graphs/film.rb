@@ -1,20 +1,19 @@
-require_relative 'kevin_bacon.rb'
-require_relative 'node'
-
 class Film
-  attr_accessor :title, :cast
+  attr_accessor :from
+  attr_accessor :to
+  attr_accessor :title
 
-  def initialize(title, cast)
+  def initialize(from, to, title)
+    @from = from
+    @to = to
     @title = title
-    @cast = cast
-    set_film_actor_hash
   end
 
-  def set_film_actor_hash
-    @cast.each do |actor|
-      # lists costars of the cast only
-      others_in_cast = @cast.reject{ |x| actor == x }
-      actor.film_actor_hash[@title] = others_in_cast
-    end
+  def <=>(other)
+    self.title = other.title
+  end
+
+  def to_s
+    "#{from.to_s} starred in '#{title}' with #{to.to_s}"
   end
 end
