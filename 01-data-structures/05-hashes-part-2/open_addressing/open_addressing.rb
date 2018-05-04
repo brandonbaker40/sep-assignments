@@ -6,9 +6,9 @@ class OpenAddressing
   end
 
   def []=(key, value)
-    node_index = index(key, size)
-    if @nodes[node_index]
-      node_index = next_open_index(index(key, size))
+    node_index = index(key, size) # assign the hashed value to node_index, i.e. 3
+    if @nodes[node_index] # if there is a node already at this index (collision)
+      node_index = next_open_index(node_index) # reassign node_index to the next availble bucket using next_open_index
       if node_index == -1
         resize
         node_index = next_open_index(index(key, size))
@@ -18,27 +18,35 @@ class OpenAddressing
   end
 
   def [](key)
-    node_index = index(key, size)
-    while @nodes[node_index].key != key
-      node_index += 1
+    if key
+      node_index = index(key, size)
+      while @nodes[node_index].key != key
+        node_index += 1
+      end
+      @nodes[node_index].value
+    else
+      puts "No key found!"
+      return
     end
-    @nodes[node_index].value
   end
 
   # Returns a unique, deterministically reproducible index into an array
   # We are hashing based on strings, let's use the ascii value of each string as
   # a starting point.
   def index(key, size)
-    key.sum % size
+    key.sum % size # hash the key
   end
 
   # Given an index, find the next open index in @nodes
-  def next_open_index(index)
-    (index...@nodes.length).each do |x|
-      if @nodes[x] == nil
-        return x
+  def next_open_index(index) # takes an argument, i.e. 3
+    (index...@nodes.length).each do |x| # starts at the index (3) and loops to the number of nodes in the chain
+      if @nodes[x] == nil # for each bucket, check if it's a nil value, meaniing it's open to be filled
+        return x # if it is open, return x which is the NEW index
       end
     end
+
+    # if it wasn't able to do it, then resize the hash and do something else
+
     return -1
   end
 

@@ -11,6 +11,15 @@ class SeparateChaining
     @node_count = 0
   end
 
+  # DEF INSERT(key, value)
+  #     COMPUTE the hash code for key, ASSIGN to index
+  #     GET array[index], ASSIGN to oldHead
+  #     SET array[index] to a link that contains key and value
+  #     IF oldHead exists THEN
+  #         SET oldHead as the second link in the chain
+  #     END IF
+  # END DEF
+
   def []=(key, value)
     node_index = index(key, size) # perform the index function and store it in a variable node_index
     node = Node.new(key, value) # create a node containing a key, value pair and store it in a variable node
@@ -29,13 +38,16 @@ class SeparateChaining
 
   def [](key)
     node_index = index(key, size)
-    if @nodes[node_index] # if there is a linked list at this index
-      current_node = @nodes[node_index].head # assign the head of the linked list to current_node
-      while current_node.key != key && current_node.next # while the key of the current_node doesn't match the argument key
-        current_node = current_node.next # go to the next node and look for it there
-      end # break the loop after you can't call next on current_node
-      current_node.value # return the value of the current_node once you find a match
+    current_node = @nodes[node_index].head
+    if @nodes[node_index].head
+      while current_node.next
+        if current_node.key == key
+          return current_node.value
+        end
+        current_node = current_node.next
+      end
     end
+    return
   end
 
   # Returns a unique, deterministically reproducible index into an array
@@ -55,19 +67,39 @@ class SeparateChaining
     @nodes.size # calculate the length of the array of items
   end
 
-  def resize
-    new_hash = SeparateChaining.new(@nodes.length * 2)
-    @nodes.each do |linked_list|
-      if linked_list
-        current_head = linked_list.head
+  # def resize
+  #   new_size = @nodes.length * 2
+  #
+  #   new_array = Array.new(new_size)
+  #   #new_hash = SeparateChaining.new(new_size) # this is me creating an entirely new instance, which is bad
+  #   @nodes.each do |linked_list|
+  #     if @nodes[linked_list]
+  #         current_node = @nodes[linked_list].head
+  #         until current_node == nil do
+  #           new_index = current_node.key.sum % new_array.length
+  #           new_array[new_index] = LinkedList.new
+  #           new_array[new_index].add_to_front(current_node)
+  #           current_node = current_node.next
+  #         end
+  #         @nodes[linked_list] = nil
+  #       end
+  #     end
+  #   end
 
-        while current_head do
-          # new_hash.[]=(current_head.key, current_head.value)
-          new_hash[current_head.key] = current_head.value
-          current_head = current_head.next
+  def resize
+      old_nodes = @nodes
+      new_size = old_nodes.size * 2
+      @nodes = Array.new(new_size)
+
+      old_nodes.each do |bucket| # for each item in the old nodes, we need to transfer to the new @nodes
+        if bucket #!= nil
+          current_node = bucket.head
+          while current_node #!= nil
+            self.[]=(current_node.key, current_node.value)
+            current_node = current_node.next
+          end
         end
       end
     end
-      @nodes = new_hash.nodes
-    end
+
 end
