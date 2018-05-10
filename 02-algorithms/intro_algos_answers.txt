@@ -1,0 +1,61 @@
+### DRIVE TO CROSSFIT ###
+
+DEF DRIVE_TO_CROSSFIT
+  SET class_time
+  SET current_time
+
+  WHILE class_time IS NOT NIL
+
+    IF class_time - current_time > 15 minutes THEN
+      head east on Anthem way
+      head south on gavilan peak parkway
+    ELSE
+      head west on Anthem way
+      head south on I-17 S
+      take exit for carefree highway
+    ENDIF
+
+    head east on carefree highway
+    head south on N 27th DR
+  END WHILE
+END
+
+### CLEAN DISHES ###
+
+DEF CLEAN_DISHES
+  WHILE dishes.dirty?
+    WHILE dishes_on_counter
+      Get a dish
+      Put it in the sink
+    END WHILE
+
+    WHILE dish has food on it
+      clean it
+      IF dish.is_a(utensil) || dish.is_a(dish) THEN
+         put it in the dishwasher
+      ELSE
+         put it in the dryer rack
+      END IF
+    END WHILE
+  END WHILE
+  run dishwasher
+END
+
+
+### PICK OUT CLOTHES ###
+DEF PICK_CLOTHES
+  SET outside_temp
+
+  IF outside_temp > 75
+      get underwear
+      get short sleeve shirt
+      get shorts
+      get flip flops
+  ELSE
+      get underwear
+      get long sleeve shirt
+      get jeans
+      get socks
+      get tennis shoes
+  END IF
+END
