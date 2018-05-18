@@ -1,5 +1,5 @@
 Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using linear search?
-Seven iterations in linear search, one for each item in the array until the last one, G.
+Seven iterations in linear search, one for each item in the collection until the last one, G.
 
 
 Given the alphabetically sorted collection in this checkpoint, how many iterations would it take to find the value G using binary search?
