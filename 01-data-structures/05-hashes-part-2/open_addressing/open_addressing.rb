@@ -18,16 +18,11 @@ class OpenAddressing
   end
 
   def [](key)
-    if key
       node_index = index(key, size)
       while @nodes[node_index].key != key
         node_index += 1
       end
-      @nodes[node_index].value
-    else
-      puts "No key found!"
-      return
-    end
+      @nodes[node_index].value if @nodes[node_index].key == key
   end
 
   # Returns a unique, deterministically reproducible index into an array
