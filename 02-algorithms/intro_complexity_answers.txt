@@ -1,0 +1,44 @@
+1. Describe an analogy for relating an algorithm that has efficiency O(1) and another algorithm that has O(2n). An example would be:
+An algorithm that has O(1) is a Cheetah and an algorithm that has O(2n) is a Snail.
+
+An algorithm that has 𝚶(1) is Usain Bolt, and an algorithm that has 𝚶(2n) is Slowpoke, the Pokemon. Example from: https://www.youtube.com/watch?v=MyeV2_tGqvw
+
+2. In plain English, what is the best case scenario for binary search?
+
+In binary search, the best case scenario is finding the answer on your first try. This is guaranteed to happen where the length of the array to search is equal to 1. The algorithm divides and conquers the one item in the array and returns itself. An equally efficient scenario is one where the value you are trying to find is the midpoint on the first iteration of the algorithm.
+
+3. In plain English, what is the worst-case scenario for binary search?
+
+In binary search, the worst case scenario is one where you search the entire list and find the value you're looking for when you've searched all but one value.
+
+4. In plain English, what is the bounded-case scenario for binary search?
+
+The bounded-case scenario for binary search is one that is "bounded" by the best and worst case scenarios. Bounded-case scenario runs slower than the best case scenario but faster than the worst case.
+
+5. Create a graph using the data below. Here's a CSV with the values you'll need.
+
+https://docs.google.com/spreadsheets/d/1BE7r5Y1teEuqLYvplbLEDGzD0ly1X7ZTc4u38D5f4bQ/edit?usp=sharing
+
+
+6. What is the limit of the function above as n approaches infinity?
+
+Infinity
+
+7. What is the Big-O of an algorithm that has the data points above?
+
+𝚶(2^n)..... Proof: 𝚶(2^0) = 1, 𝚶(2^1) = 2..... 𝚶(2^7) = 128.... 𝚶(2^9) = 512....
+
+8. Write a Ruby method that takes a number n. This method must print the worst-case number of iterations for linear search to find an item in collections of size one to n. Use it to generate a table of worst-case iterations of collections up to size 10.
+https://repl.it/repls/DarkblueHumbleCleaninstall
+
+
+9. Create a graph from the output using Google Sheets or other graphing software. Analyze the graph and denote its Big-O somewhere on the graph.
+https://docs.google.com/spreadsheets/d/1b3KRaWCvGFolEBrEyZo7nxnRTa2rJylnax7CU_DzbRI/edit?usp=sharing
+
+
+10. What is the Big-O of binary search?
+  O(log n)
+11. What is the Big-Ω of binary search?
+  O(1)
+12. What is the Big-Ө of binary search?
+  O(log n)
