@@ -1,0 +1,23 @@
+Question 1:
+
+This algorithm will always take the same amount of time to run, regardless of the size of the integer, n. Therefore, the Big-O of the algorithm is O(1), or constant time.
+
+Question 2:
+
+The time it takes for this algorithm to run will increase as the length of the collection increases. Therefore, the Big-O of the algorithm is O(n), or linear time.
+
+Question 3:
+
+The time it takes for this algorithm to run will increase as the length of the collection increases, even though it is a 2-dimensional collection. Therefore, the Big-O of the algorithm is O(n), or linear time.
+
+Question 4:
+
+The Big-O of the following algorithm is quadratic time, also known as polynomial time. The growth pattern of quadratic time most closely follows the output of the algorithm as n increases. See repl. https://repl.it/repls/UnimportantAstonishingOpensource
+https://docs.google.com/spreadsheets/d/1-mjsCRH3lePTX2UGcSQuGxMy4P0v7Jc293_nzmV6kpM/edit?usp=sharing
+
+Question 5:
+The Big-O of the following algorithm is quadratic time, also known as polynomial time. The growth pattern of quadratic time most closely follows the output of the algorithm as n increases. See repl. https://repl.it/repls/NaturalHiddenCareware
+https://docs.google.com/spreadsheets/d/1-mjsCRH3lePTX2UGcSQuGxMy4P0v7Jc293_nzmV6kpM/edit?usp=sharing
+
+Question 6:
+This algorithm is an implementation of quicksort. Quicksort's Big-O time complexity is n^2, so the Big-O of this algorithm must be n^2, or quadratic time.
