@@ -20,19 +20,22 @@ class OpenAddressing
   def [](key)
       node_index = index(key, size)
       stopper = node_index
+
       first_run = true
-      while @nodes[node_index].key != key
-        if @nodes[node_index].key == nil || (node_index == stopper && !first_run)
-          return nil
-        elsif (node_index == @nodes.length - 1) && first_run
-          node_index = 0
-          first_run = false
-        else
-          node_index += 1
+     if @nodes[node_index] != nil
+       while @nodes[node_index].key != key
+          if @nodes[node_index].key == nil || (node_index == stopper && !first_run)
+            return nil
+          elsif (node_index == @nodes.length - 1) && first_run
+            node_index = 0
+            first_run = false
+          else
+            node_index += 1
+          end
         end
+        @nodes[node_index].value
       end
-      @nodes[node_index].value
-  end
+    end
 
   # Returns a unique, deterministically reproducible index into an array
   # We are hashing based on strings, let's use the ascii value of each string as

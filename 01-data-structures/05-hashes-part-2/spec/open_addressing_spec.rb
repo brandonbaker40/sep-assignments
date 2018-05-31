@@ -29,6 +29,12 @@ RSpec.describe OpenAddressing, type: Class do
     end
   end
 
+  describe "#hash[key]" do
+    it "returns nil for non-existant keys" do
+      expect(star_wars_movies['non existant key']).to be_nil
+    end
+  end
+
   describe "#hash[key] = value" do
     it "does not resizes the array when a collision occurs and hash is not full" do
       hash = OpenAddressing.new(4)
