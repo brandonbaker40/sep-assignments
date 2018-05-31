@@ -1,0 +1,61 @@
+TL;DR
+
+Version 0: Control = O(n^2)
+Version 1: Code Optimization = O(n^2)
+Version 2: Time Complexity = O(n log n)
+Version 3: Space Complexity = O(n)
+
+Full Analysis:
+
+Running "ruby complexity_benchmark.rb" writes this to command line:
+
+Version 0: Control
+Objects Freed: 40
+Object Count: 7
+
+Version 1: Code Optimization
+Objects Freed: 1
+Object Count: 9
+
+Version 2: Time Complexity Performance
+Objects Freed: 1
+Object Count: 11
+
+Version 3: Space Complexity Performance
+Objects Freed: 1
+Object Count: 13
+
+              user     system      total        real
+Control:                   0.000000   0.000000   0.000000 (  0.000291)
+Code Optimization:         0.000000   0.000000   0.000000 (  0.000264)
+Time Complexity:           0.000000   0.000000   0.000000 (  0.000063)
+Space Complexity:          0.000000   0.000000   0.000000 (  0.000205)
+
+
+The above output is a partial view into the complexity analysis of these algorithms.
+
+This link contains a chart that also provides a partial view into the analysis of these algorithms.
+https://docs.google.com/spreadsheets/d/1XafueByMjgcyWS0khNfLxRUWTuwOl6I8ExexGMHsRwI/edit?usp=sharing
+If you make the assumption that each iteration of each algorithm takes approximately the same amount of time, you can infer with the chart (but not prove) that the control and code optimization algorithms point to either exponential or quadratic time.
+Similarly, you can infer with the chart (but not prove) that the time complexity and space complexity algorithms follow linear, constant, or loglinear time.
+
+Here's what I did to find the Big-O of each algorithm.
+
+First, we'll assume that each algorithm takes the same argument:
+
+Argument = [1, 4, 19, 5], [20, 2, 3]
+
+In the control version (Version 0), we determine Big-O like this:
+In the algorithm, we have nested loops. If the array has n items, the outer loop runs n times and the inner loop runs n times for each iteration of the outer loop, giving us n^2 total prints.
+Therefore, this method runs at O(n^2), or quadratic time.
+
+In the code optimizations version (Version 1), we determine Big-O like this:
+The code optimizations version (Version 1) follows the same pattern as the control version, minus some optimizations that make the code optimizations version run slightly faster on average.
+Therefore, this method runs at O(n^2), or quadratic time.
+
+
+This algorithm takes advantage of Ruby's built-in flatten and sort methods. Without examining the flatten and sort methods at the source code level, it's difficult to understand precisely what is going on :)
+But because this runs noticeably faster than O(n log n), it is probably O(n).
+
+In the space complexity algorithm, I implemented a version of heap sort to make the algorithm run faster than the control and code optimization algorithms. Heap sort runs at O(n log n).
+Therefore, this method runs at O(n log n), or loglinear time.
