@@ -1,3 +1,6 @@
+Answer summary: https://docs.google.com/spreadsheets/d/1GybZtOaVOkVoMeQpOotPHUJBusz0qHfZospyqzZI_lE/edit?usp=sharing
+
+
 Question 1:
 
 This algorithm will always take the same amount of time to run, regardless of the size of the integer, n. Therefore, the Big-O of the algorithm is O(1), or constant time.
