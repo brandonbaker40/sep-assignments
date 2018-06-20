@@ -1,3 +1,10 @@
+# Access this link to see the Star Wars Galaxy map that is required to validate the work in this file.
+# https://drive.google.com/file/d/1TQHnat0FyxAJ4jQsxLL08h7koLMn9_0O/view?usp=sharing
+
+# Change the starting point in the galaxy by changing the second argument in the method on the last line of this file
+
+# Run this with `ruby tsp_greed.rb`
+
 require_relative 'planet'
 require_relative 'galaxy'
 
@@ -35,13 +42,6 @@ galaxy.add_planet(dantooine)
 galaxy.add_planet(felucia)
 galaxy.add_planet(nal_hutta)
 
-# for testing purposes
-# galaxy.planets.each_index do |i|
-#   puts galaxy.planets[i].name
-#   puts calculate_parsecs(galaxy.planets[i], d_qar)
-#   puts ""
-# end
-
 def nearest_possible_neighbor(galaxy, starting_point)
   # initialize an array with the planet you start at
   shortest_route = [starting_point.name]
@@ -61,12 +61,20 @@ def nearest_possible_neighbor(galaxy, starting_point)
           current_neighbor = galaxy.planets[i]
         end
       end
+      puts "#{current_neighbor.name} is #{calculate_parsecs(current_neighbor, current_planet).round(2)} parsecs away from #{current_planet.name}"
+      # push the current_neighbor to the shortest_route
       shortest_route.push(current_neighbor.name)
+      # assign current_neighbor to current_planet before you remove it from the universe
+      current_planet = current_neighbor
+      # delete the current neighbor from the galaxy so that you don't loop over them anymore
       galaxy.planets.delete(current_neighbor)
     end
+    # add the starting_point to the end to complete the loop
     shortest_route.push(starting_point.name)
+
+    puts ""
+    puts 'SHORTEST ROUTE:'
     return shortest_route
-    puts shortest_route
   end
 
 private
@@ -76,4 +84,4 @@ def calculate_parsecs(planet_2, planet_1)
   Math.sqrt((planet_2.x - planet_1.x)**2 + (planet_2.y - planet_1.y)**2)
 end
 
-puts nearest_possible_neighbor(galaxy, tatooine)
+puts nearest_possible_neighbor(galaxy, felucia)
